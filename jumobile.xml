@@ -5,7 +5,7 @@
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
     <authorUrl>http://joomla-ua.org</authorUrl>
-    <version>1.5.0</version>
+    <version>1.6.0</version>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
     <copyright>(C) 2016-2017 Joomla! Ukraine. All rights reserved.</copyright>
     <description>PLG_SYSTEM_JUMOBILE_XML_DESCRIPTION</description>
@@ -20,6 +20,11 @@
         <language tag="en-GB">language/en-GB.plg_system_jumobile.ini</language>
         <language tag="en-GB">language/en-GB.plg_system_jumobile.sys.ini</language>
     </languages>
+
+    <update>http://joomla-ua.org/update/plg/jumobile.xml</update>
+    <updateservers>
+        <server type="extension" priority="1" name="JUMobile">http://joomla-ua.org/update/plg/jumobile.xml</server>
+    </updateservers>
 
     <config>
         <fields name="params">
