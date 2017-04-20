@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="system" method="upgrade">
+    <name>PLG_SYSTEM_JUMOBILE</name>
+    <creationDate>20.04.2017</creationDate>
+    <author>Denys Nosov</author>
+    <authorEmail>denys@joomla-ua.org</authorEmail>
+    <authorUrl>http://joomla-ua.org</authorUrl>
+    <version>1.5.0</version>
+    <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+    <copyright>(C) 2016-2017 Joomla! Ukraine. All rights reserved.</copyright>
+    <description>PLG_SYSTEM_JUMOBILE_XML_DESCRIPTION</description>
+
+    <files>
+        <filename plugin="jumobile">jumobile.php</filename>
+        <filename>index.html</filename>
+        <folder>lib</folder>
+    </files>
+
+    <languages>
+        <language tag="en-GB">language/en-GB.plg_system_jumobile.ini</language>
+        <language tag="en-GB">language/en-GB.plg_system_jumobile.sys.ini</language>
+    </languages>
+
+    <config>
+        <fields name="params">
+            <fieldset name="basic">
+
+                <field
+                        name="redirectmobile"
+                        class="btn-group btn-group-yesno"
+                        label="PLG_SYSTEM_JUMOBILE_REDIRECT_MOBILE"
+                        type="radio"
+                        default="0"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="mobiledomain"
+                        label="PLG_SYSTEM_JUMOBILE_REDIRECT_MOBILE_URL"
+                        type="text"
+                        default=""
+                />
+
+                <field
+                        name="redirectpage"
+                        class="btn-group btn-group-yesno"
+                        label="PLG_SYSTEM_JUMOBILE_REDIRECT_PAGE"
+                        type="radio"
+                        default="0"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="redirectonce"
+                        class="btn-group btn-group-yesno"
+                        label="PLG_SYSTEM_JUMOBILE_REDIRECT_ONCE"
+                        type="radio"
+                        default="0"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="template"
+                        type="templatestyle"
+                        default=""
+                        label="PLG_SYSTEM_JUMOBILE_TEMPLATE"
+                >
+                    <option value="0">JOPTION_USE_DEFAULT</option>
+                </field>
+
+                <field
+                        name="devmode"
+                        class="btn-group"
+                        label="PLG_SYSTEM_JUMOBILE_DEVELOPMENT_MODE"
+                        type="radio"
+                        default="0"
+                >
+                    <option value="0">PLG_SYSTEM_JUMOBILE_OFF</option>
+                    <option value="1">PLG_SYSTEM_JUMOBILE_ON</option>
+                </field>
+
+                <field
+                        name="devmodeip"
+                        type="textarea"
+                        default=""
+                        label="PLG_SYSTEM_JUMOBILE_DEVELOPMENT_MODE_IP"
+                />
+
+            </fieldset>
+        </fields>
+    </config>
+</extension>
