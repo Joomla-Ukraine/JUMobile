@@ -54,29 +54,62 @@ class plgSystemJUMobile extends JPlugin
      */
     public function onAfterRender()
     {
-        $app = JFactory::getApplication();
+        $app    = JFactory::getApplication();
+        $params = $this->_params;
 
         if($app->getName() != 'site')
         {
             return true;
         }
 
-        if($this->params->get('allowcache') == 1)
+        if(@$_COOKIE['jumobi'] == '0')
         {
-            $app->allowCache(true);
-            if($this->params->get('pragma') == 1)
-            {
-                $app->setHeader('Pragma', 'public', true);
-            }
+            return true;
+        }
 
-            if($this->params->get('cachecontrol') == 1)
+        $exclusion = $params->get('exclusion', '');
+        if($exclusion != '')
+        {
+            $urls = explode("\r\n", $exclusion);
+            foreach ($urls as $url)
             {
-                $app->setHeader('Cache-Control', 'public', true);
+                if(strpos(JURI::current(), $url) !== false)
+                {
+                    return true;
+                }
             }
+        }
 
-            if($this->params->get('expires') == 1)
+        $lib_md  = new Mobile_Detect();
+        $browser = JBrowser::getInstance();
+        $agent   = $browser->getAgentString();
+
+        $enabled = $app->getUserStateFromRequest('jumobile.isenabled', 'jumobile', true, 'bool');
+
+        $this->isMobile = ($lib_md->isMobile() || $lib_md->isTablet());
+
+        if($this->devMode ||
+            ($lib_md && $this->isMobile) ||
+            (!$lib_md && $browser->isMobile() || stristr($agent, 'mobile'))
+        )
+        {
+            if($this->params->get('allowcache') == 1 && $enabled)
             {
-                $app->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $this->params->get('expirestime')) . ' GMT', true);
+                $app->allowCache(true);
+                if($this->params->get('pragma') == 1)
+                {
+                    $app->setHeader('Pragma', 'public', true);
+                }
+
+                if($this->params->get('cachecontrol') == 1)
+                {
+                    $app->setHeader('Cache-Control', 'public', true);
+                }
+
+                if($this->params->get('expires') == 1)
+                {
+                    $app->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $this->params->get('expirestime')) . ' GMT', true);
+                }
             }
         }
 
