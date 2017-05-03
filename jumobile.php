@@ -52,12 +52,47 @@ class plgSystemJUMobile extends JPlugin
      *
      * @return bool
      */
+    public function onAfterRender()
+    {
+        $app = JFactory::getApplication();
+
+        if($app->getName() != 'site')
+        {
+            return true;
+        }
+
+        if($this->params->get('allowcache') == 1)
+        {
+            $app->allowCache(true);
+            if($this->params->get('pragma') == 1)
+            {
+                $app->setHeader('Pragma', 'public', true);
+            }
+
+            if($this->params->get('cachecontrol') == 1)
+            {
+                $app->setHeader('Cache-Control', 'public', true);
+            }
+
+            if($this->params->get('expires') == 1)
+            {
+                $app->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $this->params->get('expirestime')) . ' GMT', true);
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     *
+     * @return bool
+     */
     function onAfterInitialise()
     {
         $app    = JFactory::getApplication();
         $params = $this->_params;
 
-        if($app->isAdmin())
+        if($app->getName() != 'site')
         {
             return true;
         }

@@ -89,6 +89,58 @@
                 />
 
                 <field
+                        name="allowcache"
+                        class="btn-group"
+                        type="radio"
+                        default="0"
+                        label="PLG_SYSTEM_JUMOBILE_CACHE"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="pragma"
+                        class="btn-group"
+                        type="radio"
+                        default="0"
+                        label="PLG_SYSTEM_JUMOBILE_PRAGMA"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="cachecontrol"
+                        class="btn-group"
+                        type="radio"
+                        default="0"
+                        label="PLG_SYSTEM_JUMOBILE_CC"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="expires"
+                        class="btn-group"
+                        type="radio"
+                        default="0"
+                        label="PLG_SYSTEM_JUMOBILE_EXPIRES"
+                >
+                    <option value="0">JNO</option>
+                    <option value="1">JYES</option>
+                </field>
+
+                <field
+                        name="expirestime"
+                        type="text"
+                        default="900"
+                        size="4"
+                        label="PLG_SYSTEM_JUMOBILE_EXPIRES_TIME"
+                />
+
+                <field
                         name="devmode"
                         class="btn-group"
                         label="PLG_SYSTEM_JUMOBILE_DEVELOPMENT_MODE"
