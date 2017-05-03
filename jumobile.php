@@ -50,17 +50,35 @@ class plgSystemJUMobile extends JPlugin
 
     /**
      *
-     *
-     * @since version
+     * @return bool
      */
     function onAfterInitialise()
     {
         $app    = JFactory::getApplication();
         $params = $this->_params;
 
-        if($app->isAdmin()) return;
+        if($app->isAdmin())
+        {
+            return true;
+        }
 
-        if(@$_COOKIE['jumobi'] == '0') return;
+        if(@$_COOKIE['jumobi'] == '0')
+        {
+            return true;
+        }
+
+        $exclusion = $params->get('exclusion', '');
+        if($exclusion != '')
+        {
+            $urls = explode("\r\n", $exclusion);
+            foreach ($urls as $url)
+            {
+                if(strpos(JURI::current(), $url) !== false)
+                {
+                    return true;
+                }
+            }
+        }
 
         $lib_md  = new Mobile_Detect();
         $browser = JBrowser::getInstance();
@@ -89,7 +107,7 @@ class plgSystemJUMobile extends JPlugin
                     }
                     else
                     {
-                        return;
+                        return true;
                     }
                 }
             }

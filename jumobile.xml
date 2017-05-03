@@ -80,6 +80,15 @@
                 </field>
 
                 <field
+                        name="exclusion"
+                        type="textarea"
+                        rows="10"
+                        cols="20"
+                        class="span7"
+                        label="PLG_SYSTEM_JUMOBILE_EXCLUSION"
+                />
+
+                <field
                         name="devmode"
                         class="btn-group"
                         label="PLG_SYSTEM_JUMOBILE_DEVELOPMENT_MODE"
