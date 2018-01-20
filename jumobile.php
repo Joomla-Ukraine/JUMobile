@@ -21,11 +21,12 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.plugin.plugin');
 jimport('joomla.environment.browser');
 
-require_once(__DIR__ . '/lib/Mobile_Detect.php');
+require_once __DIR__ . '/lib/Mobile_Detect.php';
 
 /**
  * JUMobile Plugin.
  *
+ * @property  _plugin
  * @since  1.0
  */
 class plgSystemJUMobile extends JPlugin
@@ -51,6 +52,8 @@ class plgSystemJUMobile extends JPlugin
     /**
      *
      * @return bool
+     *
+     * @since 1.0
      */
     public function onAfterRender()
     {
@@ -90,7 +93,7 @@ class plgSystemJUMobile extends JPlugin
 
         if($this->devMode ||
             ($lib_md && $this->isMobile) ||
-            ((!$lib_md && $browser->isMobile()) || stristr($agent, 'mobile'))
+            ((!$lib_md && $browser->isMobile()) || false !== stripos($agent, 'mobile'))
         )
         {
             if($this->params->get('allowcache') == 1 && $enabled)
@@ -119,6 +122,8 @@ class plgSystemJUMobile extends JPlugin
     /**
      *
      * @return bool
+     *
+     * @since 1.0
      */
     public function onAfterInitialise()
     {
@@ -173,17 +178,15 @@ class plgSystemJUMobile extends JPlugin
 
                         break;
                     }
-                    else
-                    {
-                        return true;
-                    }
                 }
+
+                return true;
             }
         }
 
         if($this->devMode ||
             ($lib_md && $this->isMobile) ||
-            ((!$lib_md && $browser->isMobile()) || stristr($agent, 'mobile'))
+            ((!$lib_md && $browser->isMobile()) || false !== stripos($agent, 'mobile')) // stristr($agent, 'mobile')
         )
         {
             if($enabled)
@@ -205,7 +208,7 @@ class plgSystemJUMobile extends JPlugin
                         $app->setUserState('jumobile.isredirected', true);
                         $page = ltrim($uri->toString(array('path', 'query')), '/');
 
-                        if(preg_match('/^http(?:s)?\:\/\/.*/i', $mobiledomain))
+                        if(preg_match('#^http(?:s)?\:\/\/.*#i', $mobiledomain))
                         {
                             $app->redirect($mobiledomain . ($redirectPage ? '/' . $page : ''));
                         }
@@ -220,7 +223,10 @@ class plgSystemJUMobile extends JPlugin
                     }
                 }
 
-                if($template > 0 && $template != -1) $app->input->set('templateStyle', $template);
+                if($template > 0 && $template != -1)
+                {
+                    $app->input->set('templateStyle', $template);
+                }
 
                 $app->setUserState('jumobile.ismobile', true);
             }
