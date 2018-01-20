@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="system" method="upgrade">
     <name>PLG_SYSTEM_JUMOBILE</name>
-    <creationDate>04.05.2017</creationDate>
+    <creationDate>21.01.2018</creationDate>
     <author>Denys Nosov</author>
     <authorEmail>denys@joomla-ua.org</authorEmail>
-    <authorUrl>http://joomla-ua.org</authorUrl>
-    <version>1.7.0</version>
+    <authorUrl>https://joomla-ua.org</authorUrl>
+    <version>1.8.0</version>
     <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-    <copyright>(C) 2016-2017 Joomla! Ukraine. All rights reserved.</copyright>
+    <copyright>(C) 2016-2018 Joomla! Ukraine. All rights reserved.</copyright>
     <description>PLG_SYSTEM_JUMOBILE_XML_DESCRIPTION</description>
 
     <files>
