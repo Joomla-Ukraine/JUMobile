@@ -21,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
 jimport('joomla.plugin.plugin');
 jimport('joomla.environment.browser');
 
-require_once(JPATH_SITE . '/plugins/system/jumobile/lib/Mobile_Detect.php');
+require_once(__DIR__ . '/lib/Mobile_Detect.php');
 
 /**
  * JUMobile Plugin.
@@ -37,10 +37,10 @@ class plgSystemJUMobile extends JPlugin
     /**
      * plgSystemJUMobile constructor.
      *
-     * @param object $subject
-     * @param array  $params
+     * @param $subject
+     * @param $params
      */
-    function __construct(&$subject, $params)
+    public function __construct(&$subject, $params)
     {
         parent::__construct($subject, $params);
 
@@ -90,7 +90,7 @@ class plgSystemJUMobile extends JPlugin
 
         if($this->devMode ||
             ($lib_md && $this->isMobile) ||
-            (!$lib_md && $browser->isMobile() || stristr($agent, 'mobile'))
+            ((!$lib_md && $browser->isMobile()) || stristr($agent, 'mobile'))
         )
         {
             if($this->params->get('allowcache') == 1 && $enabled)
@@ -120,7 +120,7 @@ class plgSystemJUMobile extends JPlugin
      *
      * @return bool
      */
-    function onAfterInitialise()
+    public function onAfterInitialise()
     {
         $app    = JFactory::getApplication();
         $params = $this->_params;
@@ -183,7 +183,7 @@ class plgSystemJUMobile extends JPlugin
 
         if($this->devMode ||
             ($lib_md && $this->isMobile) ||
-            (!$lib_md && $browser->isMobile() || stristr($agent, 'mobile'))
+            ((!$lib_md && $browser->isMobile()) || stristr($agent, 'mobile'))
         )
         {
             if($enabled)
