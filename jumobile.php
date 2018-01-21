@@ -33,7 +33,7 @@ class plgSystemJUMobile extends JPlugin
 {
     protected $app;
     protected $isMobile = false;
-    protected $devMode = false;
+    protected $devMode = 0;
 
     /**
      * plgSystemJUMobile constructor.
@@ -91,7 +91,29 @@ class plgSystemJUMobile extends JPlugin
 
         $this->isMobile = ($lib_md->isMobile() || $lib_md->isTablet());
 
-        if($this->devMode ||
+        if($params->get('devmode', false))
+        {
+            $ip_addresses = array_filter(explode("\r\n", $params->get('devmodeip', '')));
+
+            if(!empty($ip_addresses))
+            {
+                foreach ($ip_addresses as $ip)
+                {
+                    if($this->get_ip() == $ip)
+                    {
+                        $this->devMode = 1;
+
+                        break;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        if($this->devMode == '1' ||
             ($lib_md && $this->isMobile) ||
             ((!$lib_md && $browser->isMobile()) || false !== stripos($agent, 'mobile'))
         )
@@ -169,22 +191,24 @@ class plgSystemJUMobile extends JPlugin
             {
                 foreach ($ip_addresses as $ip)
                 {
-                    if($app->input->server->get('REMOTE_ADDR', false) === $ip)
+                    if($this->get_ip() == $ip)
                     {
-                        $this->devMode = true;
+                        $this->devMode = 1;
                         $lib_md        = 1;
                         $app->setUserState('jumobile.ismobile', true);
                         $app->setUserState('jumobile.device', 'mobile');
 
                         break;
                     }
+                    else
+                    {
+                        return true;
+                    }
                 }
-
-                return true;
             }
         }
 
-        if($this->devMode ||
+        if($this->devMode == '1' ||
             ($lib_md && $this->isMobile) ||
             ((!$lib_md && $browser->isMobile()) || false !== stripos($agent, 'mobile')) // stristr($agent, 'mobile')
         )
@@ -263,5 +287,48 @@ class plgSystemJUMobile extends JPlugin
         }
 
         return true;
+    }
+
+    /**
+     *
+     * @return string
+     *
+     * @since 1.0
+     */
+    private function get_ip()
+    {
+        if(!empty(getenv('HTTP_CLIENT_IP')))
+        {
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        }
+        elseif(!empty(getenv('HTTP_X_FORWARDED_FOR')))
+        {
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        }
+        elseif(!empty(getenv('HTTP_X_FORWARDED')))
+        {
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        }
+        elseif(!empty(getenv('HTTP_FORWARDED_FOR')))
+        {
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        }
+        elseif(!empty(getenv('HTTP_FORWARDED')))
+        {
+            $ipaddress = getenv('HTTP_FORWARDED');
+        }
+        elseif(!empty(getenv('REMOTE_ADDR')))
+        {
+            $ipaddress = getenv('REMOTE_ADDR');
+        }
+        else
+        {
+            $ipaddress = 'UNKNOWN';
+        }
+
+        $ips = explode(",", $ipaddress);
+        $ip  = trim($ips[0]);
+
+        return $ip;
     }
 }
