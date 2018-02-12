@@ -113,28 +113,25 @@ class plgSystemJUMobile extends JPlugin
             }
         }
 
-        if($this->devMode == '1' ||
-            ($lib_md && $this->isMobile) ||
-            ((!$lib_md && $browser->isMobile()) || false !== stripos($agent, 'mobile'))
+        if(($this->devMode == '1' ||
+                ($lib_md && $this->isMobile) ||
+                ((!$lib_md && $browser->isMobile()) || false !== stripos($agent, 'mobile'))) && $this->params->get('allowcache') == 1 && $enabled
         )
         {
-            if($this->params->get('allowcache') == 1 && $enabled)
+            $app->allowCache(true);
+            if($this->params->get('pragma') == 1)
             {
-                $app->allowCache(true);
-                if($this->params->get('pragma') == 1)
-                {
-                    $app->setHeader('Pragma', 'public', true);
-                }
+                $app->setHeader('Pragma', 'public', true);
+            }
 
-                if($this->params->get('cachecontrol') == 1)
-                {
-                    $app->setHeader('Cache-Control', 'public', true);
-                }
+            if($this->params->get('cachecontrol') == 1)
+            {
+                $app->setHeader('Cache-Control', 'public', true);
+            }
 
-                if($this->params->get('expires') == 1)
-                {
-                    $app->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $this->params->get('expirestime')) . ' GMT', true);
-                }
+            if($this->params->get('expires') == 1)
+            {
+                $app->setHeader('Expires', gmdate('D, d M Y H:i:s', time() + $this->params->get('expirestime')) . ' GMT', true);
             }
         }
 
@@ -326,9 +323,8 @@ class plgSystemJUMobile extends JPlugin
             $ipaddress = 'UNKNOWN';
         }
 
-        $ips = explode(",", $ipaddress);
-        $ip  = trim($ips[0]);
+        $ips = explode(',', $ipaddress);
 
-        return $ip;
+        return trim($ips[0]);
     }
 }
