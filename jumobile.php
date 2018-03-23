@@ -65,7 +65,7 @@ class plgSystemJUMobile extends JPlugin
             return true;
         }
 
-        if(@$_COOKIE['jumobi'] == '0')
+        if(@$_COOKIE[$this->params->get('cookiename')] == '0')
         {
             return true;
         }
@@ -140,6 +140,48 @@ class plgSystemJUMobile extends JPlugin
 
     /**
      *
+     * @return string
+     *
+     * @since 1.0
+     */
+    private function get_ip()
+    {
+        if(!empty(getenv('HTTP_CLIENT_IP')))
+        {
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        }
+        elseif(!empty(getenv('HTTP_X_FORWARDED_FOR')))
+        {
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        }
+        elseif(!empty(getenv('HTTP_X_FORWARDED')))
+        {
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        }
+        elseif(!empty(getenv('HTTP_FORWARDED_FOR')))
+        {
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        }
+        elseif(!empty(getenv('HTTP_FORWARDED')))
+        {
+            $ipaddress = getenv('HTTP_FORWARDED');
+        }
+        elseif(!empty(getenv('REMOTE_ADDR')))
+        {
+            $ipaddress = getenv('REMOTE_ADDR');
+        }
+        else
+        {
+            $ipaddress = 'UNKNOWN';
+        }
+
+        $ips = explode(',', $ipaddress);
+
+        return trim($ips[0]);
+    }
+
+    /**
+     *
      * @return bool
      *
      * @since 1.0
@@ -154,7 +196,7 @@ class plgSystemJUMobile extends JPlugin
             return true;
         }
 
-        if(@$_COOKIE['jumobi'] == '0')
+        if(@$_COOKIE[$this->params->get('cookiename')] == '0')
         {
             return true;
         }
@@ -284,47 +326,5 @@ class plgSystemJUMobile extends JPlugin
         }
 
         return true;
-    }
-
-    /**
-     *
-     * @return string
-     *
-     * @since 1.0
-     */
-    private function get_ip()
-    {
-        if(!empty(getenv('HTTP_CLIENT_IP')))
-        {
-            $ipaddress = getenv('HTTP_CLIENT_IP');
-        }
-        elseif(!empty(getenv('HTTP_X_FORWARDED_FOR')))
-        {
-            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-        }
-        elseif(!empty(getenv('HTTP_X_FORWARDED')))
-        {
-            $ipaddress = getenv('HTTP_X_FORWARDED');
-        }
-        elseif(!empty(getenv('HTTP_FORWARDED_FOR')))
-        {
-            $ipaddress = getenv('HTTP_FORWARDED_FOR');
-        }
-        elseif(!empty(getenv('HTTP_FORWARDED')))
-        {
-            $ipaddress = getenv('HTTP_FORWARDED');
-        }
-        elseif(!empty(getenv('REMOTE_ADDR')))
-        {
-            $ipaddress = getenv('REMOTE_ADDR');
-        }
-        else
-        {
-            $ipaddress = 'UNKNOWN';
-        }
-
-        $ips = explode(',', $ipaddress);
-
-        return trim($ips[0]);
     }
 }
