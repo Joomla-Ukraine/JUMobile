@@ -6,7 +6,7 @@
  * @subpackage       plg_jumobile
  *
  * @author           Denys Nosov, denys@joomla-ua.org
- * @copyright        2016-2018 (C) Joomla! Ukraine, https://joomla-ua.org. All rights reserved.
+ * @copyright        2016-2019 (C) Joomla! Ukraine, https://joomla-ua.org. All rights reserved.
  * @license          GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -16,7 +16,7 @@
  * @license        GNU General Public License <http://www.gnu.org/copyleft/gpl.html>
  */
 
-defined('_JEXEC') or die('Restricted access');
+defined('_JEXEC') or die;
 
 jimport('joomla.plugin.plugin');
 jimport('joomla.environment.browser');
@@ -53,6 +53,7 @@ class plgSystemJUMobile extends JPlugin
      *
      * @return bool
      *
+     * @throws Exception
      * @since 1.0
      */
     public function onAfterRender()
@@ -60,7 +61,7 @@ class plgSystemJUMobile extends JPlugin
         $app    = JFactory::getApplication();
         $params = $this->_params;
 
-        if($app->getName() != 'site')
+        if($app->getName() !== 'site')
         {
             return true;
         }
@@ -184,6 +185,7 @@ class plgSystemJUMobile extends JPlugin
      *
      * @return bool
      *
+     * @throws Exception
      * @since 1.0
      */
     public function onAfterInitialise()
@@ -191,7 +193,7 @@ class plgSystemJUMobile extends JPlugin
         $app    = JFactory::getApplication();
         $params = $this->_params;
 
-        if($app->getName() != 'site')
+        if($app->getName() !== 'site')
         {
             return true;
         }
@@ -286,7 +288,7 @@ class plgSystemJUMobile extends JPlugin
                     }
                 }
 
-                if($template > 0 && $template != -1)
+                if($template > 0 && $template != '-1')
                 {
                     $app->input->set('templateStyle', $template);
                 }
